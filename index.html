@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Story+Script&display=swap" rel="stylesheet">
+
+  <script src="https://kit.fontawesome.com/44aa80a087.js" crossorigin="anonymous"></script>
+
+  <script src="script.js" defer></script>
+
+  <title>My ToDo List</title>
+</head>
+
+<body>
+
+  <video class="bg-video" autoplay muted loop playsinline aria-hidden="true">
+    <source src="img/move.mp4" type="video/mp4">
+  </video>
+
+  <main id="container">
+
+    <header>
+      <h3>To Do List</h3>
+    </header>
+
+    <div class="listra"></div>
+
+    <!-- FORM TAREFA -->
+    <section id="containerDados">
+
+      <form id="formInput">
+        <div class="divInput">
+
+          <h3>Tarefa</h3>
+
+          <input
+            type="text"
+            class="inputForm"
+            placeholder="O que você vai fazer?"
+          >
+
+          <button type="submit">
+            <i class="fa-solid fa-share"></i>
+          </button>
+
+        </div>
+      </form>
+
+      <!-- FORM EDIT -->
+      <form id="formEdit">
+
+        <div class="divEdit">
+
+          <h3>Edição</h3>
+
+          <input
+            type="text"
+            class="inputEdit"
+            placeholder="Deseja editar?"
+          >
+
+          <button class="buttonEdit">
+            <i class="fa-regular fa-pen-to-square"></i>
+          </button>
+
+          <button class="cancel-btn">
+            <i class="fa-regular fa-rectangle-xmark"></i>
+          </button>
+
+        </div>
+
+      </form>
+
+    </section>
+
+    <!-- PESQUISA -->
+    <section id="containerPesquisa">
+
+      <form id="formPesquisa">
+
+        <div class="divPesquisa">
+
+          <h3>Pesquisa</h3>
+
+          <input
+            type="text"
+            class="inputPesquisa"
+            placeholder="O que está procurando?"
+          >
+
+          <button class="buttonPesquisa">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+
+        </div>
+
+        <div class="menuPesquisa">
+
+          <h3>Seleção</h3>
+
+          <select id="menu">
+            <option value="todos">Todos</option>
+            <option value="feitos">Feitos</option>
+            <option value="pendentes">Pendentes</option>
+          </select>
+
+        </div>
+
+      </form>
+
+    </section>
+
+    <!-- TODO -->
+    <section id="todo">
+
+    </section>
+
+  </main>
+
+</body>
+</html>
