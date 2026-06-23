@@ -32,9 +32,11 @@ function toggleTarefa(id) {
 toggleTarefa(1); // chama a função toggleTarefa com o id 1 para alternar o status da tarefa encontrada
 
 function editarTarefa(id, novoTitulo) {
-  const tarefa = buscarTarefaPorId(id);
+  const tarefa = buscarTarefaPorId(id)
   if(!tarefa) return;
-  tarefa.titulo = novoTitulo;
+  const tituloLimpo = novoTitulo.trim()
+  if(tituloLimpo === '') return;
+  tarefa.titulo = tituloLimpo
 }; // função que edita o titulo da tarefa encontrada
 
 editarTarefa(1, 'Tarefa 2'); // chama a função editarTarefa com o id 1 e o novo titulo 'Tarefa 2' para editar o titulo da tarefa encontrada
