@@ -39,7 +39,7 @@ function editarTarefa(id, novoTitulo) {
   function renderizarTarefas() {
     const container = document.querySelector('#todo');
     const stringsHTML = tarefas.map(function(tarefa) {
-      const tituloTela = `<div data-id="${tarefa.id}" ${tarefa.titulo}</div>`
-      return tituloTela;
+      const tituloTela = `<div data-id="${tarefa.id}"> ${tarefa.titulo}</div>`
+      return tituloTela.join("");
     })
   }
