@@ -97,3 +97,14 @@ todo.addEventListener('click', function(event) {
     excluirTarefa(Number(target.dataset.id));
   }
 }); 
+
+formEditar.addEventListener('submit', function(e){
+  e.preventDefault()
+  const edit = document.querySelector('.inputEdit');
+  const editTexto = edit.value.trim();
+  if(editTexto === "") return;
+
+  editarTarefa(editando,editTexto)
+  formEditar.classList.add('hide');
+  edit.value = "";
+});
