@@ -36,10 +36,11 @@ function editarTarefa(id, novoTitulo) {
   tarefa.titulo = tituloLimpo
 }; // função que edita o titulo da tarefa encontrada
 
-  function renderizarTarefas() {
-    const container = document.querySelector('#todo');
-    const stringsHTML = tarefas.map(function(tarefa) {
-      const tituloTela = `<div data-id="${tarefa.id}"> ${tarefa.titulo}</div>`
-      return tituloTela.join("");
-    })
-  }
+function renderizarTarefas() {
+  const container = document.querySelector('#todo');
+  const stringsHTML = tarefas.map(function(tarefa) {
+    const tituloTela = `<div data-id="${tarefa.id}"> ${tarefa.titulo}</div>`;
+    return tituloTela;
+  })
+  container.innerHTML = stringsHTML.join("");
+}
