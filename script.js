@@ -1,6 +1,14 @@
+// VARIÁVEIS DE DADOS
 const tarefas = [];
 let ultimoId = 0;
+let editando = null;
 
+// VARIAVEIS DE DOM ELEMENTOS
+const formEditar = document.querySelector('#formEdit');
+formEditar.classList.add('hide');
+
+
+// FUNÇÕES
 function criarTarefa(texto) { 
   const novaTarefa = {
     id: ++ultimoId,
@@ -41,7 +49,7 @@ function editarTarefa(id, novoTitulo) {
   tarefa.titulo = tituloLimpo
 
   renderizarTarefas();
-}; // função que edita o titulo da tarefa encontrada
+};
 
 function renderizarTarefas() {
   const container = document.querySelector('#todo');
@@ -56,6 +64,8 @@ function renderizarTarefas() {
   container.innerHTML = stringsHTML.join("");
 }
 
+// EVENTOS
+
 const formInput = document.querySelector('#formInput');
 
 formInput.addEventListener('submit', function(event) {
@@ -68,3 +78,22 @@ formInput.addEventListener('submit', function(event) {
   input.value = '';
   input.focus();
 });                                           
+
+const todo = document.querySelector('#todo');
+
+todo.addEventListener('click', function(event) {
+  const target = event.target;
+
+  if(target.classList.contains('btnCheck')) {
+    toggleTarefa(Number(target.dataset.id));
+  }
+  if(target.classList.contains('btnEditar')) {
+    const inputEditar = document.querySelector('.inputEdit');
+    editando = Number(target.dataset.id);
+    formEditar.classList.remove('hide');
+    inputEditar.focus();
+  }
+  if(target.classList.contains('btnExcluir')) {
+    excluirTarefa(Number(target.dataset.id));
+  }
+}); 
