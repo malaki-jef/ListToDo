@@ -57,9 +57,9 @@ function excluirTarefa (id) {
   renderizarTarefas()
 };
 
-function renderizarTarefas() {
+function renderizarTarefas(lista = tarefas) {
   const container = document.querySelector('#todo');
-  const stringsHTML = tarefas.map(function(tarefa) {
+  const stringsHTML = lista.map(function(tarefa) {
     const tituloTela = `<div class="todoList ${tarefa.status ? 'check' : ' ' }" data-id="${tarefa.id}"><h4>${tarefa.titulo}</h4>
     <button class="btnCheck" data-id="${tarefa.id}"><i class="fa-solid fa-check"></i></button>
     <button class="btnEditar" data-id="${tarefa.id}"><i class="fa-regular fa-pen-to-square"></i></button>
@@ -70,7 +70,9 @@ function renderizarTarefas() {
   container.innerHTML = stringsHTML.join("");
 }
 
-
+function filtrarTarefas () {
+  
+};
 // EVENTOS
 
 const formInput = document.querySelector('#formInput');
@@ -114,4 +116,14 @@ formEditar.addEventListener('submit', function(e){
   editarTarefa(editando,editTexto)
   formEditar.classList.add('hide');
   edit.value = "";
+});
+
+const cancelBtn = document.querySelector('.cancel-btn');
+
+cancelBtn.addEventListener('click', function(e) {
+  e.preventDefault()
+  const edit = document.querySelector('.inputEdit');
+  formEditar.classList.add('hide');
+  edit.value = "";
+  editando = null
 });
