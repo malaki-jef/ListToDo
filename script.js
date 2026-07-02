@@ -1,5 +1,5 @@
 // VARIÁVEIS DE DADOS
-const tarefas = [];
+let tarefas = [];
 let ultimoId = 0;
 let editando = null;
 
@@ -51,6 +51,12 @@ function editarTarefa(id, novoTitulo) {
   renderizarTarefas();
 };
 
+function excluirTarefa (id) {
+  tarefas = tarefas.filter(tarefa => tarefa.id !== id);
+
+  renderizarTarefas()
+};
+
 function renderizarTarefas() {
   const container = document.querySelector('#todo');
   const stringsHTML = tarefas.map(function(tarefa) {
@@ -63,6 +69,7 @@ function renderizarTarefas() {
   }) 
   container.innerHTML = stringsHTML.join("");
 }
+
 
 // EVENTOS
 
