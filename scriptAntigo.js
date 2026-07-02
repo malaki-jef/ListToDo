@@ -1,5 +1,5 @@
 // Seleção de dados
-const cointainer = document.querySelector('#container');
+const container = document.querySelector('#container');
 const formInput = document.querySelector('#formInput');
 const formEdit = document.querySelector('#formEdit');
 const formPesquisa = document.querySelector('#formPesquisa');
@@ -9,15 +9,19 @@ const containerPesquisa = document.querySelector('#containerPesquisa');
 const menu = document.querySelector('#menu');
 const cancelBtn = document.querySelector('.cancel-btn');
 const inputPesquisa = document.querySelector('.inputPesquisa');
+
 let tituloAntigo;
 
-// Função
+// =========================
+// Funções
+// =========================
+
 const criarElemento = (text) => {
-  const todoList = document.querySelector('#todo');
+  const todo = document.querySelector('#todo');
 
   const div = document.createElement('div');
   div.classList.add('todoList');
-  todoList.appendChild(div);
+  todo.appendChild(div);
 
   const title = document.createElement('h4');
   title.textContent = text;
@@ -25,23 +29,24 @@ const criarElemento = (text) => {
   div.appendChild(title);
 
   const btnDone = document.createElement('button');
-  btnDone.innerHTML = "<i class='fa-solid fa-check'>";
   btnDone.classList.add('btnDone');
+  btnDone.innerHTML = "<i class='fa-solid fa-check'></i>";
   div.appendChild(btnDone);
 
   const btnEdit = document.createElement('button');
-  btnEdit.innerHTML = "<i class='fa-solid fa-pen'>";
   btnEdit.classList.add('btnEdit');
+  btnEdit.innerHTML = "<i class='fa-solid fa-pen'></i>";
   div.appendChild(btnEdit);
 
   const btnRemove = document.createElement('button');
-  btnRemove.innerHTML = "<i class='fa-solid fa-xmark'>";
   btnRemove.classList.add('btnRemove');
+  btnRemove.innerHTML = "<i class='fa-solid fa-xmark'></i>";
   div.appendChild(btnRemove);
 };
 
 const escondeTudo = () => {
   formInput.classList.toggle('hide');
+  formEdit.classList.toggle('hide');
   containerPesquisa.classList.toggle('hide');
 };
 
@@ -49,72 +54,96 @@ const editarTarefa = (editTaref) => {
   const todos = document.querySelectorAll('.todoList');
 
   todos.forEach((todo) => {
-    let todosTitulos = todo.querySelector('h4');
+    const titulo = todo.querySelector('h4');
 
-    if (todosTitulos.innerText === tituloAntigo) {
-      todosTitulos.innerText = editTaref;
+    if (titulo.innerText === tituloAntigo) {
+      titulo.innerText = editTaref;
     }
-
-    inputEdit.value = '';
   });
+
+  inputEdit.value = '';
 };
 
 function mostrarAlert() {
-  document.getElementById('alerta').style.display = 'block';
+  const alerta = document.querySelector('.alerta');
+
+  if (alerta) {
+    alerta.style.display = 'block';
+  }
 }
 
 function fecharAlert() {
-  document.getElementById('alerta').style.display = 'none';
+  const alerta = document.querySelector('.alerta');
+
+  if (alerta) {
+    alerta.style.display = 'none';
+  }
 }
 
 function criarAlerta() {
-  const divForm = document.querySelector('.divInput')
+  if (document.querySelector('.alerta')) return;
+
+  const divForm = document.querySelector('.divInput');
+
   const alerta = document.createElement('div');
   alerta.classList.add('alerta');
-  alerta.innerText = 'Tarefa adicionada com sucesso!';
-  divForm.appendChild(alerta); //tentar colocar alerta
+  alerta.innerText = 'Digite uma tarefa antes de adicionar.';
+  alerta.style.display = 'none';
+
+  divForm.appendChild(alerta);
 }
-// Evento
+
+// cria apenas uma vez
+criarAlerta();
+
+// =========================
+// Eventos
+// =========================
 
 formInput.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  const valueInput = inputForm.value;
+  const valueInput = inputForm.value.trim();
 
   if (valueInput) {
     criarElemento(valueInput);
+    fecharAlert();
   } else {
-    criarAlerta()
-    mostrarAlert()
-  };
+    mostrarAlert();
+    return;
+  }
 
   inputForm.value = '';
   inputForm.focus();
 });
 
 document.addEventListener('click', (event) => {
-  const targeEl = event.target;
-  const parentEl = targeEl.closest('.todoList');
-  let tituloEditar;
 
-  if (parentEl && parentEl.querySelector('h4')) {
-    tituloEditar = parentEl.querySelector('h4').innerText;
-  }
+  const btnDone = event.target.closest('.btnDone');
+  const btnEdit = event.target.closest('.btnEdit');
+  const btnRemove = event.target.closest('.btnRemove');
 
-  if (targeEl.classList.contains('btnDone')) {
+  const parentEl = event.target.closest('.todoList');
+
+  if (!parentEl) return;
+
+  const tituloEditar = parentEl.querySelector('h4').innerText;
+
+  if (btnDone) {
     parentEl.classList.toggle('check');
-    console.log(targeEl);
   }
 
-  if (targeEl.classList.contains('btnRemove')) {
+  if (btnRemove) {
     parentEl.remove();
   }
-  if (targeEl.classList.contains('btnEdit')) {
+
+  if (btnEdit) {
     escondeTudo();
 
-    inputEdit.value = tituloEditar; // jogo para o input de editar o valor do h4 que foi criado na tarefa.
-    tituloAntigo = tituloEditar; // armazenou o valor da tarega h4 em uma variavel.
+    inputEdit.value = tituloEditar;
+    tituloAntigo = tituloEditar;
   }
+
 });
 
 cancelBtn.addEventListener('click', (e) => {
@@ -128,42 +157,47 @@ cancelBtn.addEventListener('click', (e) => {
 formEdit.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  const editTaref = inputEdit.value;
+  const editTaref = inputEdit.value.trim();
 
   if (editTaref) {
     editarTarefa(editTaref);
   }
 
   escondeTudo();
-
 });
 
-inputPesquisa.addEventListener('input', (e) => {
- 
+inputPesquisa.addEventListener('input', () => {
+
+  const valorPesquisa = inputPesquisa.value.toLowerCase();
+
   const todos = document.querySelectorAll('.todoList');
-  const valorInputPesquisa = inputPesquisa.value.toLowerCase();
-
-  todos.forEach((text) => {
-    const textoH4 = text.textContent.toLowerCase();
-
-    if (textoH4.includes(valorInputPesquisa)) {
-      text.style.display = '';
-    } else {
-      text.style.display = 'none';
-    }
-  });
-});
-
-
-menu.addEventListener('change', () => {
-  const valor = menu.value; 
-
-  const todos = document.querySelectorAll('.todolist'); 
 
   todos.forEach((item) => {
 
-    const status = item.classList.contains('check') ? 'feitos' : 'pendentes';
-    
+    const texto = item.querySelector('h4').textContent.toLowerCase();
+
+    if (texto.includes(valorPesquisa)) {
+      item.style.display = 'flex';
+    } else {
+      item.style.display = 'none';
+    }
+
+  });
+
+});
+
+menu.addEventListener('change', () => {
+
+  const valor = menu.value;
+
+  const todos = document.querySelectorAll('.todoList');
+
+  todos.forEach((item) => {
+
+    const status = item.classList.contains('check')
+      ? 'feitos'
+      : 'pendentes';
+
     if (valor === 'todos') {
       item.style.display = 'flex';
     } else if (valor === status) {
@@ -171,7 +205,7 @@ menu.addEventListener('change', () => {
     } else {
       item.style.display = 'none';
     }
+
   });
+
 });
-
-
