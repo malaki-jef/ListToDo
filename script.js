@@ -71,7 +71,30 @@ function renderizarTarefas(lista = tarefas) {
 }
 
 function filtrarTarefas () {
-  
+   const inputPesquisa = document.querySelector('.inputPesquisa');
+   const menu = document.querySelector('#menu');
+
+   const valorPesquisa = inputPesquisa.value.trim()
+   const valorMenu = menu.value.trim()
+
+  let resultado = tarefas;
+
+  if(valorPesquisa != "") {
+    resultado = resultado.filter(function(result){
+      return result.titulo.toLowerCase().includes(valorPesquisa.toLowerCase());
+    });
+  };
+  if(valorMenu === "feitos") {
+    resultado = resultado.filter(function(result){
+      return result.status === true;
+    })};
+  if(valorMenu === "pendentes") {
+    resultado = resultado.filter(function(result){
+      return result.status === false;
+    });
+   };
+
+   renderizarTarefas(resultado)
 };
 // EVENTOS
 
@@ -126,4 +149,18 @@ cancelBtn.addEventListener('click', function(e) {
   formEditar.classList.add('hide');
   edit.value = "";
   editando = null
+});
+
+const pesquisa = document.querySelector('.inputPesquisa');
+pesquisa.addEventListener('input', function(e){
+  e.preventDefault();
+
+  filtrarTarefas();
+})
+
+const menu = document.querySelector('#menu');
+menu.addEventListener('change', function(e){
+  e.preventDefault();
+
+  filtrarTarefas();
 });
